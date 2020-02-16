@@ -1,0 +1,407 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Language: \n"
+"POT-Creation-Date: 2019-06-25 00:44+0000\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: webzp-4f-vc-modules.php:79
+msgid "Fund"
+msgstr ""
+
+#: webzp-4f-vc-modules.php:80
+msgid "Index"
+msgstr ""
+
+#: webzp-4f-vc-modules.php:81
+msgid "as of"
+msgstr ""
+
+#: webzp-4f-vc-modules.php:82
+msgid "category"
+msgstr ""
+
+#: webzp-4f-vc-modules.php:83
+msgid "funds in category"
+msgstr ""
+
+#: webzp-4f-vc-modules.php:84
+#, php-format
+msgid "As a % of assets (as of"
+msgstr ""
+
+#: webzp-4f-vc-modules.php:85
+msgid "Total"
+msgstr ""
+
+#: modules/webzp-4f-vc-documents.php:32 modules/webzp-4f-vc-documents.php:52 
+#: modules/webzp-4f-vc-documents-module.php:32 
+#: modules/webzp-4f-vc-documents-module.php:52
+msgid "Fund Documents"
+msgstr ""
+
+#: modules/webzp-4f-vc-documents.php:53 
+#: modules/webzp-4f-vc-documents-module.php:53
+msgid "Outputs fund documents links."
+msgstr ""
+
+#: modules/webzp-4f-vc-documents.php:54 
+#: modules/webzp-4f-vc-morningstar-ratings.php:88 
+#: modules/webzp-4f-vc-highlights-module.php:54 
+#: modules/webzp-4f-vc-fund-characteristics.php:107 
+#: modules/webzp-4f-vc-nav.php:57 modules/webzp-4f-vc-risk-profile.php:63 
+#: modules/webzp-4f-vc-morningstar.php:57 
+#: modules/webzp-4f-vc-allocation.php:59 
+#: modules/webzp-4f-vc-morningstar-category.php:56 
+#: modules/webzp-4f-vc-nav-module.php:55 
+#: modules/webzp-4f-vc-title-module.php:49 modules/webzp-4f-vc-bios.php:53 
+#: modules/webzp-4f-vc-highlights.php:56 
+#: modules/webzp-4f-vc-ytd-performance.php:57 
+#: modules/webzp-4f-vc-year-returns.php:59 
+#: modules/webzp-4f-vc-subtitle-module.php:49 
+#: modules/webzp-4f-vc-subtitle.php:49 modules/webzp-4f-vc-fund-aum.php:57 
+#: modules/webzp-4f-vc-sc-inception-date.php:56 
+#: modules/webzp-4f-vc-title.php:49 
+#: modules/webzp-4f-vc-documents-module.php:54 
+#: modules/webzp-4f-vc-portfolio.php:58 modules/webzp-4f-vc-performance.php:94 
+#: modules/webzp-4f-vc-fees.php:95 modules/webzp-4f-vc-risk-measures.php:119
+msgid "4F API"
+msgstr ""
+
+#: modules/webzp-4f-vc-morningstar-ratings.php:32 
+#: modules/webzp-4f-vc-morningstar-ratings.php:86
+msgid "Morningstar ratings"
+msgstr ""
+
+#: modules/webzp-4f-vc-morningstar-ratings.php:33
+msgid "Overall"
+msgstr ""
+
+#: modules/webzp-4f-vc-morningstar-ratings.php:34
+msgid "3 Year"
+msgstr ""
+
+#: modules/webzp-4f-vc-morningstar-ratings.php:35
+msgid "5 Year"
+msgstr ""
+
+#: modules/webzp-4f-vc-morningstar-ratings.php:36
+msgid "10 Year"
+msgstr ""
+
+#: modules/webzp-4f-vc-morningstar-ratings.php:87
+msgid "Outputs Morningstar ratings."
+msgstr ""
+
+#: modules/webzp-4f-vc-highlights-module.php:34 
+#: modules/webzp-4f-vc-highlights-module.php:52 
+#: modules/webzp-4f-vc-highlights.php:32 modules/webzp-4f-vc-highlights.php:54
+msgid "Fund Highlights"
+msgstr ""
+
+#: modules/webzp-4f-vc-highlights-module.php:53 
+#: modules/webzp-4f-vc-highlights.php:55
+msgid "Outputs fund highlights."
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-characteristics.php:31 
+#: modules/webzp-4f-vc-fund-characteristics.php:105
+msgid "Fund Characteristics"
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-characteristics.php:32
+msgid "Management Company"
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-characteristics.php:33
+msgid "Investement Manager"
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-characteristics.php:34
+msgid "Share Class"
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-characteristics.php:35
+msgid "Legal Structure"
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-characteristics.php:36
+msgid "Reference Index"
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-characteristics.php:37
+msgid "ISIN"
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-characteristics.php:38
+msgid "Base Currency"
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-characteristics.php:39
+msgid "Bloomberg Ticker"
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-characteristics.php:106
+msgid "Outputs Fund Characteristics."
+msgstr ""
+
+#: modules/webzp-4f-vc-nav.php:32 modules/webzp-4f-vc-nav.php:55 
+#: modules/webzp-4f-vc-nav-module.php:36 modules/webzp-4f-vc-nav-module.php:53
+msgid "NAV"
+msgstr ""
+
+#: modules/webzp-4f-vc-nav.php:56 modules/webzp-4f-vc-nav-module.php:54
+msgid "Outputs NAV and date."
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-profile.php:31
+msgid "Risk"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-profile.php:61
+msgid "Risk and Rewards Profile"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-profile.php:62
+msgid "Outputs Risk and Rewards Profile."
+msgstr ""
+
+#: modules/webzp-4f-vc-morningstar.php:32 
+#: modules/webzp-4f-vc-morningstar.php:55
+msgid "Overall Morningstar Rating"
+msgstr ""
+
+#: modules/webzp-4f-vc-morningstar.php:56
+msgid "Outputs Overall Morningstar Rating and date."
+msgstr ""
+
+#: modules/webzp-4f-vc-allocation.php:31 modules/webzp-4f-vc-allocation.php:57
+msgid "Allocation"
+msgstr ""
+
+#: modules/webzp-4f-vc-allocation.php:58
+msgid "Outputs Allocation."
+msgstr ""
+
+#: modules/webzp-4f-vc-morningstar-category.php:32 
+#: modules/webzp-4f-vc-morningstar-category.php:54
+msgid "Morningstar Category"
+msgstr ""
+
+#: modules/webzp-4f-vc-morningstar-category.php:55
+msgid "Outputs Morningstar Category and date."
+msgstr ""
+
+#: modules/webzp-4f-vc-title-module.php:47 modules/webzp-4f-vc-title.php:47
+msgid "Fund Title"
+msgstr ""
+
+#: modules/webzp-4f-vc-title-module.php:48 modules/webzp-4f-vc-title.php:48
+msgid "Outputs fund title."
+msgstr ""
+
+#: modules/webzp-4f-vc-bios.php:51
+msgid "Bios"
+msgstr ""
+
+#: modules/webzp-4f-vc-bios.php:52
+msgid "Outputs Bios."
+msgstr ""
+
+#: modules/webzp-4f-vc-ytd-performance.php:32 
+#: modules/webzp-4f-vc-ytd-performance.php:55
+msgid "YTD Performance"
+msgstr ""
+
+#: modules/webzp-4f-vc-ytd-performance.php:56
+msgid "Outputs YTD Performance and date."
+msgstr ""
+
+#: modules/webzp-4f-vc-year-returns.php:31 
+#: modules/webzp-4f-vc-year-returns.php:57
+msgid "Calendar year returns (%)"
+msgstr ""
+
+#: modules/webzp-4f-vc-year-returns.php:58
+msgid "Outputs Calendar year returns (%)."
+msgstr ""
+
+#: modules/webzp-4f-vc-subtitle-module.php:47 
+#: modules/webzp-4f-vc-subtitle.php:47
+msgid "Fund Subtitle"
+msgstr ""
+
+#: modules/webzp-4f-vc-subtitle-module.php:48 
+#: modules/webzp-4f-vc-subtitle.php:48
+msgid "Outputs fund subtitle."
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-aum.php:32 modules/webzp-4f-vc-fund-aum.php:55
+msgid "Fund AUM"
+msgstr ""
+
+#: modules/webzp-4f-vc-fund-aum.php:56
+msgid "Outputs Fund AUM and date."
+msgstr ""
+
+#: modules/webzp-4f-vc-sc-inception-date.php:32 
+#: modules/webzp-4f-vc-sc-inception-date.php:54
+msgid "Share Class Inception Date"
+msgstr ""
+
+#: modules/webzp-4f-vc-sc-inception-date.php:55
+msgid "Outputs Share Class Inception Date."
+msgstr ""
+
+#: modules/webzp-4f-vc-portfolio.php:31 modules/webzp-4f-vc-portfolio.php:56
+msgid "Portfolio"
+msgstr ""
+
+#: modules/webzp-4f-vc-portfolio.php:57
+msgid "Outputs Portfolio."
+msgstr ""
+
+#: modules/webzp-4f-vc-performance.php:31 
+#: modules/webzp-4f-vc-performance.php:92
+msgid "Performance"
+msgstr ""
+
+#: modules/webzp-4f-vc-performance.php:32
+msgid "Cumulative (%)"
+msgstr ""
+
+#: modules/webzp-4f-vc-performance.php:33
+msgid "Annualised (%)"
+msgstr ""
+
+#: modules/webzp-4f-vc-performance.php:34
+msgid "1 yr"
+msgstr ""
+
+#: modules/webzp-4f-vc-performance.php:35
+msgid "3 yr"
+msgstr ""
+
+#: modules/webzp-4f-vc-performance.php:36
+msgid "5 yr"
+msgstr ""
+
+#: modules/webzp-4f-vc-performance.php:37
+msgid "10 yr"
+msgstr ""
+
+#: modules/webzp-4f-vc-performance.php:38
+msgid "Since inception"
+msgstr ""
+
+#: modules/webzp-4f-vc-performance.php:93
+msgid "Outputs Performance."
+msgstr ""
+
+#: modules/webzp-4f-vc-fees.php:31 modules/webzp-4f-vc-fees.php:93
+msgid "Fees & Expenses"
+msgstr ""
+
+#: modules/webzp-4f-vc-fees.php:32
+msgid "Minimum Initial Investment"
+msgstr ""
+
+#: modules/webzp-4f-vc-fees.php:33
+msgid "Maximum Sales Charge"
+msgstr ""
+
+#: modules/webzp-4f-vc-fees.php:34
+msgid "Redemption Charge"
+msgstr ""
+
+#: modules/webzp-4f-vc-fees.php:35
+msgid "Ongoing Charges/TER"
+msgstr ""
+
+#: modules/webzp-4f-vc-fees.php:36
+msgid "Performance Fee"
+msgstr ""
+
+#: modules/webzp-4f-vc-fees.php:37
+msgid "Swing Pricing"
+msgstr ""
+
+#: modules/webzp-4f-vc-fees.php:94
+msgid "Outputs Fees & Expenses."
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:31 
+#: modules/webzp-4f-vc-risk-measures.php:117
+msgid "Risk Measures"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:32
+msgid "Alpha"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:33
+msgid "Beta"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:34
+msgid "R-Squared"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:35
+msgid "Sharpe Ratio"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:36
+msgid "Fund Standard Deviation"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:37
+msgid "Index Standard Deviation"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:38
+msgid "Tracking Error"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:40
+msgid "1YR"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:41
+msgid "3YR"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:42
+msgid "5YR"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:43
+msgid "7YR"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:44
+msgid "10YR"
+msgstr ""
+
+#: modules/webzp-4f-vc-risk-measures.php:118
+msgid "Outputs Risk Measures."
+msgstr ""
+
+#. Name of the plugin
+msgid "4F Custom Visual Composer modules"
+msgstr ""
+
+#. Description of the plugin
+msgid "4F Custom Visual Composer modules to render some API data"
+msgstr ""
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://github.com/Knyazevich"
+msgstr ""
+
+#. Author of the plugin
+msgid "Pavlo Knyazevich"
+msgstr ""
