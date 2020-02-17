@@ -1,5 +1,7 @@
 <?php
 
+require plugin_dir_path(__FILE__) . 'class.PDF.php';
+
 class MST_4F_AS_Screenshot {
   private $API_KEY;
   private $recipients_emails;
@@ -8,6 +10,10 @@ class MST_4F_AS_Screenshot {
   private $screenshot_path;
 
   public function __construct() {
+    if (empty(MST_4F_AS_DB_Options::get('is_screenshots_enabled'))) {
+      return;
+    }
+
     $this->API_KEY = MST_4F_AS_DB_Options::get('apiflash_api_key');
     $this->recipients_emails = MST_4F_AS_DB_Options::get('screenshots_recipients_emails');
     $this->pages_to_screenshot = MST_4F_AS_DB_Options::get('pages_to_screenshot');
@@ -76,6 +82,17 @@ class MST_4F_AS_Screenshot {
         $this->attachments
       );
     }
+  }
+
+  private function generate_screenshots_pdf() {
+    $pdf = new PDF();
+
+    foreach ($this->attachments as $image) {
+      $pdf->AddPage();
+      $pdf->centreImage($image);
+    }
+
+    $pdf->Output('F', $this->screenshot_path . 'screenshots.pdf');
   }
 }
 

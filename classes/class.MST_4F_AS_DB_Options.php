@@ -2,7 +2,11 @@
 
 class MST_4F_AS_DB_Options {
   public static function get($name) {
-    return get_option('mst_4f_as_options')[$name];
+    if (!empty(get_option('mst_4f_as_options')[$name])) {
+      return get_option('mst_4f_as_options')[$name];
+    } else {
+      return null;
+    }
   }
 
   public static function set_basic_options() {
@@ -10,10 +14,12 @@ class MST_4F_AS_DB_Options {
 
     if (!$options) {
       add_option(self::get_name(), [
-        'is_enabled' => 1,
+        'is_screenshots_enabled' => 1,
         'apiflash_api_key' => '',
         'screenshots_recipients_emails' => '',
         'pages_to_screenshot' => '',
+        'force_redirect_enabled' => '0',
+        'force_redirect_url' => home_url('404'),
       ]);
     }
   }

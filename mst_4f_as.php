@@ -31,6 +31,7 @@ class MST_4F_Alert_System {
 
   private function init_actions() {
     add_action('plugins_loaded', [ $this, 'load_text_domain' ]);
+    add_action('wp_head', [ $this, 'add_force_redirection_js_parameters_to_head' ]);
     register_activation_hook(__FILE__, [ $this, 'setup_plugin_on_activation' ]);
     register_deactivation_hook(__FILE__, [ $this, 'setup_plugin_on_deactivation' ]);
   }
@@ -69,6 +70,17 @@ class MST_4F_Alert_System {
 
   public function setup_plugin_on_deactivation() {
     Kama_Cron::deactivate('cron_jobs');
+  }
+
+  public function add_force_redirection_js_parameters_to_head() {
+    ?>
+    <script>
+      var mst_4f_as_force_redirect_options = {
+        isEnabled: <?php echo (int) MST_4F_AS_DB_Options::get('force_redirect_enabled'); ?>,
+        redirectionURL: '<?php echo MST_4F_AS_DB_Options::get('force_redirect_url'); ?>',
+      }
+    </script>
+    <?php
   }
 }
 
