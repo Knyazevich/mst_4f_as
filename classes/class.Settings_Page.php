@@ -1,6 +1,8 @@
 <?php
 
-class MST_4F_AS_Settings_Page {
+namespace Maximumstart\Alert_System;
+
+class Settings_Page {
   public function __construct() {
     $this->init_actions();
   }
@@ -26,6 +28,7 @@ class MST_4F_AS_Settings_Page {
     $this->register_settings_sections();
     $this->register_screenshots_settings_fields();
     $this->register_force_redirect_fields();
+    $this->register_data_changing_fields();
   }
 
   private function register_settings_sections() {
@@ -39,6 +42,13 @@ class MST_4F_AS_Settings_Page {
     add_settings_section(
       'mst_4f_as_force_redirect_options_section',
       esc_html__('Force funds redirect settings', 'mst_4f_as'),
+      null,
+      'mst_4f_as_options'
+    );
+
+    add_settings_section(
+      'mst_4f_as_data_changing_options_section',
+      esc_html__('Data changing settings', 'mst_4f_as'),
       null,
       'mst_4f_as_options'
     );
@@ -96,6 +106,32 @@ class MST_4F_AS_Settings_Page {
     );
   }
 
+  public function register_data_changing_fields() {
+    add_settings_field(
+      'mst_4f_as_data_changing_alerts_enabled',
+      esc_html__('Do data changing alerts enabled?', 'mst_4f_as'),
+      [ $this, 'render_do_data_changing_alerts_enabled_field' ],
+      'mst_4f_as_options',
+      'mst_4f_as_data_changing_options_section'
+    );
+
+    add_settings_field(
+      'mst_4f_as_data_changing_recipients_emails',
+      esc_html__('Data changing recipients emails', 'mst_4f_as'),
+      [ $this, 'render_data_changing_recipients_emails_field' ],
+      'mst_4f_as_options',
+      'mst_4f_as_data_changing_options_section'
+    );
+
+    add_settings_field(
+      'mst_4f_as_pages_to_watch',
+      esc_html__('Pages to watch', 'mst_4f_as'),
+      [ $this, 'render_pages_to_data_changing_watch_field' ],
+      'mst_4f_as_options',
+      'mst_4f_as_data_changing_options_section'
+    );
+  }
+
   public function render_option_page_content() {
     ?>
     <form action="<?php echo admin_url('options.php'); ?>" method="POST">
@@ -111,33 +147,47 @@ class MST_4F_AS_Settings_Page {
   }
 
   public function render_is_screenshots_enabled_field() {
-    $value = MST_4F_AS_DB_Options::get('is_screenshots_enabled');
+    $value = DB_Options::get('is_screenshots_enabled');
     printf('<input type="checkbox" name="mst_4f_as_options[is_screenshots_enabled]" %s value="1">', checked($value, true, false));
   }
 
   public function render_apiflash_key_field() {
-    $value = esc_attr(MST_4F_AS_DB_Options::get('apiflash_api_key'));
+    $value = esc_attr(DB_Options::get('apiflash_api_key'));
     printf('<input type="text" name="mst_4f_as_options[apiflash_api_key]" value="%s" style="width: 400px">', $value);
   }
 
   public function render_screenshots_recipients_emails_field() {
-    $value = esc_html(MST_4F_AS_DB_Options::get('screenshots_recipients_emails'));
+    $value = esc_html(DB_Options::get('screenshots_recipients_emails'));
     printf('<textarea name="mst_4f_as_options[screenshots_recipients_emails]" style="width: 400px">%s</textarea>', $value);
   }
 
   public function render_pages_to_screenshot_field() {
-    $value = esc_html(MST_4F_AS_DB_Options::get('pages_to_screenshot'));
+    $value = esc_html(DB_Options::get('pages_to_screenshot'));
     printf('<textarea name="mst_4f_as_options[pages_to_screenshot]" style="width: 400px; height: 300px">%s</textarea>', $value);
   }
 
   public function render_is_force_redirect_enabled_field() {
-    $value = MST_4F_AS_DB_Options::get('force_redirect_enabled');
+    $value = DB_Options::get('force_redirect_enabled');
     printf('<input type="checkbox" name="mst_4f_as_options[force_redirect_enabled]" %s value="1">', checked($value, true, false));
   }
 
   public function render_force_redirect_url_field() {
-    $value = esc_attr(MST_4F_AS_DB_Options::get('force_redirect_url'));
+    $value = esc_attr(DB_Options::get('force_redirect_url'));
     printf('<input type="text" name="mst_4f_as_options[force_redirect_url]" value="%s" style="width: 400px">', $value);
   }
-}
 
+  public function render_do_data_changing_alerts_enabled_field() {
+    $value = DB_Options::get('data_changing_alerts_enabled');
+    printf('<input type="checkbox" name="mst_4f_as_options[data_changing_alerts_enabled]" %s value="1">', checked($value, true, false));
+  }
+
+  public function render_data_changing_recipients_emails_field() {
+    $value = esc_html(DB_Options::get('data_changing_recipients_emails'));
+    printf('<textarea name="mst_4f_as_options[data_changing_recipients_emails]" style="width: 400px">%s</textarea>', $value);
+  }
+
+  public function render_pages_to_data_changing_watch_field() {
+    $value = esc_html(DB_Options::get('pages_to_watch'));
+    printf('<textarea name="mst_4f_as_options[pages_to_watch]" style="width: 400px; height: 300px">%s</textarea>', $value);
+  }
+}

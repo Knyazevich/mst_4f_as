@@ -1,8 +1,8 @@
 <?php
 
-require plugin_dir_path(__FILE__) . 'class.PDF.php';
+namespace Maximumstart\Alert_System;
 
-class MST_4F_AS_Screenshot {
+class Screenshot {
   private $API_KEY;
   private $recipients_emails;
   private $pages_to_screenshot;
@@ -10,13 +10,13 @@ class MST_4F_AS_Screenshot {
   private $screenshot_path;
 
   public function __construct() {
-    if (empty(MST_4F_AS_DB_Options::get('is_screenshots_enabled'))) {
+    if (empty(DB_Options::get('is_screenshots_enabled'))) {
       return;
     }
 
-    $this->API_KEY = MST_4F_AS_DB_Options::get('apiflash_api_key');
-    $this->recipients_emails = MST_4F_AS_DB_Options::get('screenshots_recipients_emails');
-    $this->pages_to_screenshot = MST_4F_AS_DB_Options::get('pages_to_screenshot');
+    $this->API_KEY = DB_Options::get('apiflash_api_key');
+    $this->recipients_emails = DB_Options::get('screenshots_recipients_emails');
+    $this->pages_to_screenshot = DB_Options::get('pages_to_screenshot');
     $this->screenshot_path = WP_PLUGIN_DIR . '/mst_4f_as/screenshots/';
   }
 
@@ -62,7 +62,7 @@ class MST_4F_AS_Screenshot {
       'full_page' => true,
       'fresh' => true,
       'delay' => 3,
-    ], 'https://api.apiflash.com/v1/urltoimage?');
+    ], 'https://api.apiflash.com/v1/urltoimage');
 
     $image_data = file_get_contents($request_url);
     file_put_contents($this->screenshot_path . sprintf('%s--%s.jpeg', $current_datetime, $random_id), $image_data);
@@ -70,29 +70,18 @@ class MST_4F_AS_Screenshot {
 
   private function send_screenshots() {
     $recipients = explode("\n", str_replace("\r", '', $this->recipients_emails));
+    $date = date('Y-m-d');
 
     if (!sizeof($this->attachments) || !sizeof($recipients)) return;
 
     foreach ($recipients as $recipient) {
       wp_mail(
         sanitize_email($recipient),
-        '4F Funds Screenshots',
+        sprintf('[%s] Report of the 4F funds', $date),
         'Hi! A bunch of new screenshots already here.',
         '',
         $this->attachments
       );
     }
   }
-
-  private function generate_screenshots_pdf() {
-    $pdf = new PDF();
-
-    foreach ($this->attachments as $image) {
-      $pdf->AddPage();
-      $pdf->centreImage($image);
-    }
-
-    $pdf->Output('F', $this->screenshot_path . 'screenshots.pdf');
-  }
 }
-

@@ -1,13 +1,15 @@
 <?php
 
+namespace Maximumstart\Alert_System;
+
 /**
  * Convenient way to add cron tasks in WordPress.
  * Changelog: https://github.com/doiftrue/Kama_Cron/blob/master/changelog.md
  * @author Kama (wp-kama.ru)
  * @version 0.4.4
  */
-class Kama_Cron {
-  static $DEBUG = 1;
+class Cron {
+  static $DEBUG = 0;
   static $opts;
   protected $id;
 

@@ -1,6 +1,8 @@
 <?php
 
-class MST_4F_AS_DB_Options {
+namespace Maximumstart\Alert_System;
+
+class DB_Options {
   public static function get($name) {
     if (!empty(get_option('mst_4f_as_options')[$name])) {
       return get_option('mst_4f_as_options')[$name];
@@ -20,6 +22,9 @@ class MST_4F_AS_DB_Options {
         'pages_to_screenshot' => '',
         'force_redirect_enabled' => '0',
         'force_redirect_url' => home_url('404'),
+        'data_changing_alerts_enabled' => '1',
+        'data_changing_recipients_emails' => '',
+        'pages_to_watch' => '',
       ]);
     }
   }
