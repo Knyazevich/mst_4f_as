@@ -27,7 +27,6 @@ class Settings_Page {
 
     $this->register_settings_sections();
     $this->register_screenshots_settings_fields();
-    $this->register_force_redirect_fields();
     $this->register_data_changing_fields();
   }
 
@@ -35,13 +34,6 @@ class Settings_Page {
     add_settings_section(
       'mst_4f_as_screenshots_options_section',
       esc_html__('Screenshots settings', 'mst_4f_as'),
-      null,
-      'mst_4f_as_options'
-    );
-
-    add_settings_section(
-      'mst_4f_as_force_redirect_options_section',
-      esc_html__('Force funds redirect settings', 'mst_4f_as'),
       null,
       'mst_4f_as_options'
     );
@@ -85,24 +77,6 @@ class Settings_Page {
       [ $this, 'render_pages_to_screenshot_field' ],
       'mst_4f_as_options',
       'mst_4f_as_screenshots_options_section'
-    );
-  }
-
-  public function register_force_redirect_fields() {
-    add_settings_field(
-      'mst_4f_as_force_redirect_is_enabled',
-      esc_html__('Force redirect enabled?', 'mst_4f_as'),
-      [ $this, 'render_is_force_redirect_enabled_field' ],
-      'mst_4f_as_options',
-      'mst_4f_as_force_redirect_options_section'
-    );
-
-    add_settings_field(
-      'mst_4f_as_force_redirect_url',
-      esc_html__('Force redirect URL', 'mst_4f_as'),
-      [ $this, 'render_force_redirect_url_field' ],
-      'mst_4f_as_options',
-      'mst_4f_as_force_redirect_options_section'
     );
   }
 
@@ -164,16 +138,6 @@ class Settings_Page {
   public function render_pages_to_screenshot_field() {
     $value = esc_html(DB_Options::get('pages_to_screenshot'));
     printf('<textarea name="mst_4f_as_options[pages_to_screenshot]" style="width: 400px; height: 300px">%s</textarea>', $value);
-  }
-
-  public function render_is_force_redirect_enabled_field() {
-    $value = DB_Options::get('force_redirect_enabled');
-    printf('<input type="checkbox" name="mst_4f_as_options[force_redirect_enabled]" %s value="1">', checked($value, true, false));
-  }
-
-  public function render_force_redirect_url_field() {
-    $value = esc_attr(DB_Options::get('force_redirect_url'));
-    printf('<input type="text" name="mst_4f_as_options[force_redirect_url]" value="%s" style="width: 400px">', $value);
   }
 
   public function render_do_data_changing_alerts_enabled_field() {

@@ -26,6 +26,7 @@ require plugin_dir_path(__FILE__) . 'classes/class.Cron.php';
 require plugin_dir_path(__FILE__) . 'classes/class.DB_Options.php';
 require plugin_dir_path(__FILE__) . 'classes/class.Settings_Page.php';
 require plugin_dir_path(__FILE__) . 'classes/class.Screenshot.php';
+require plugin_dir_path(__FILE__) . 'classes/class.Fund_Report.php';
 
 class Main {
   public function __construct() {
@@ -36,22 +37,26 @@ class Main {
 
   public function set_screenshots_taking_cron_task() {
     $screenshot_instance = new Screenshot();
+    $report_instance = new Fund_Report();
 
     new Cron([
       'id' => 'cron_jobs',
       'auto_activate' => false,
       'events' => [
-        'take_screenshots_every_day' => [
+        'mst_4f_as_take_screenshots_every_day' => [
           'callback' => [ $screenshot_instance, 'take_and_send_all' ],
           'interval_name' => 'daily',
         ],
+        'mst_4f_as_create_fund_report_every_day' => [
+          'callback' => [ $report_instance, 'generate_report' ],
+          'interval_name' => 'daily',
+        ]
       ],
     ]);
   }
 
   private function init_actions() {
     add_action('plugins_loaded', [ $this, 'load_text_domain' ]);
-    add_action('wp_head', [ $this, 'add_force_redirection_js_parameters_to_head' ]);
     register_activation_hook(__FILE__, [ $this, 'setup_plugin_on_activation' ]);
     register_deactivation_hook(__FILE__, [ $this, 'setup_plugin_on_deactivation' ]);
   }
@@ -75,17 +80,6 @@ class Main {
 
   public function setup_plugin_on_deactivation() {
     Cron::deactivate('cron_jobs');
-  }
-
-  public function add_force_redirection_js_parameters_to_head() {
-    ?>
-    <script>
-      var mst_4f_as_force_redirect_options = {
-        isEnabled: <?php echo (int) DB_Options::get('force_redirect_enabled'); ?>,
-        redirectionURL: '<?php echo DB_Options::get('force_redirect_url'); ?>',
-      }
-    </script>
-    <?php
   }
 }
 

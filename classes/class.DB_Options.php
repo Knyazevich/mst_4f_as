@@ -20,8 +20,6 @@ class DB_Options {
         'apiflash_api_key' => '',
         'screenshots_recipients_emails' => '',
         'pages_to_screenshot' => '',
-        'force_redirect_enabled' => '0',
-        'force_redirect_url' => home_url('404'),
         'data_changing_alerts_enabled' => '1',
         'data_changing_recipients_emails' => '',
         'pages_to_watch' => '',
