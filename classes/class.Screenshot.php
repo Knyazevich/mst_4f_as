@@ -21,8 +21,16 @@ class Screenshot {
   }
 
   public function take_and_send_all() {
-    $this->take_and_save_all();
-    $this->send_screenshots();
+    try {
+      $this->take_and_save_all();
+      $this->send_screenshots();
+      $this->remove_screenshots();
+    } catch (\Exception $e) {
+      do_action('logger', [
+        'errror' => $e,
+        'status' => 'error'
+      ]);
+    }
   }
 
   private function take_and_save_all() {
@@ -50,6 +58,11 @@ class Screenshot {
 
   private function take($page_url) {
     if (empty($this->API_KEY)) {
+      do_action('logger', [
+        'errror' => 'ERROR: ApiFlash key must be provided',
+        'status' => 'error'
+      ]);
+
       wp_die('ERROR: ApiFlash key must be provided ' . print_r(debug_backtrace(), 1));
     }
 
@@ -60,12 +73,29 @@ class Screenshot {
       'url' => urlencode($page_url),
       'format' => 'jpeg',
       'full_page' => true,
-      'fresh' => true,
+      'fresh' => false,
       'delay' => 3,
+      'response_type' => 'json'
     ], 'https://api.apiflash.com/v1/urltoimage');
 
-    $image_data = file_get_contents($request_url);
-    file_put_contents($this->screenshot_path . sprintf('%s--%s.jpeg', $current_datetime, $random_id), $image_data);
+    $json = json_decode(file_get_contents($request_url));
+    $image = file_get_contents($json->url);
+
+    do_action('logger', [
+      '$image' => $image,
+      'status' => 'info'
+    ]);
+
+    if (empty($json)) {
+      do_action('logger', [
+        'error' => 'Maximum api call count reached.',
+        'status' => 'error'
+      ]);
+
+      wp_die();
+    }
+
+    file_put_contents($this->screenshot_path . sprintf('%s--%s.jpeg', $current_datetime, $random_id), $image);
   }
 
   private function send_screenshots() {
@@ -82,6 +112,15 @@ class Screenshot {
         '',
         $this->attachments
       );
+    }
+  }
+
+  private function remove_screenshots() {
+    $files = glob($this->screenshot_path . '*');
+
+    foreach ($files as $file) {
+      if (is_file($file))
+        unlink($file);
     }
   }
 }

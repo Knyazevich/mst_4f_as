@@ -7,7 +7,7 @@ require plugin_dir_path(__FILE__) . 'class.Fund_Parameter.php';
 class Fund_Parameters_Collection {
   public static function get_income_funds_rules() {
     return [
-      'overview.nav.value' => new Fund_Parameter('NAV', 'float', 'any', 2),
+      'overview.nav.value' => new Fund_Parameter('NAV', 'string', 'any', 2),
       'overview.performance_ytd.value' => new Fund_Parameter('YTD Performance', 'float', 'any', 1),
       'overview.fund_size.value' => new Fund_Parameter('Fund AUM', 'float'),
       'overview.inception_date.value' => new Fund_Parameter('Share Class Inception Date', 'date'),

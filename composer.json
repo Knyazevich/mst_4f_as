@@ -1,0 +1,16 @@
+{
+  "name": "maximumstart/4f_alert_system",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Pavlo Kniazevych",
+      "email": "psknyazevich@gmail.com"
+    }
+  ],
+  "require": {
+    "phpunit/phpunit": "9.0.1",
+    "ext-json": "*"
+  }
+}

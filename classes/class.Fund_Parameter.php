@@ -52,6 +52,10 @@ class Fund_Parameter {
   }
 
   private function percentage_difference($current, $previous) {
+    if (!is_numeric($current) || !is_numeric($previous)) {
+      return false;
+    }
+
     if (empty((float) $current) || empty((float) $previous)) {
       return 0;
     }
@@ -60,28 +64,29 @@ class Fund_Parameter {
       return 0;
     }
 
-    return (($previous - $current) / $current) * 100;
+    return round(($current - $previous) / $previous * 100);
   }
 
   private function is_alert($diff_type, $diff_value, $change_percentage) {
-    switch ($diff_type) {
-      case 'inc':
-        if ($diff_value > $change_percentage) {
-          return true;
-        }
-        break;
-      case 'dec':
-        if ($diff_value < $change_percentage) {
-          return true;
-        }
-        break;
-      default:
-        if ($diff_value !== $change_percentage) {
-          return true;
-        } else {
-          return false;
-        }
+    if ($diff_type === 'inc' && $change_percentage > $diff_value) {
+      return true;
     }
+
+    if ($diff_type === 'dec' && $change_percentage < $diff_value) {
+      return true;
+    }
+
+    if ($diff_type === 'any') {
+      if ($change_percentage === 0) {
+        return false;
+      }
+
+      if ($diff_value > $change_percentage || $diff_value < $change_percentage) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public function get_property($property_name) {
@@ -110,6 +115,6 @@ class Fund_Parameter {
   }
 
   private function compare_year_returns_array($current, $previous) {
-    return (array) $current === (array) $previous;
+    return (bool) sizeof(array_diff($current, $previous));
   }
 }

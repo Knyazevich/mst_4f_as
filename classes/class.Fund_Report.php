@@ -11,11 +11,14 @@ class Fund_Report {
   private $message;
   private $recipients_emails;
   private $current_fund;
+  private $current_cached_fund;
 
   public function __construct() {
     $this->recipients_emails = DB_Options::get('data_changing_recipients_emails');
     $this->funds_to_check = DB_Options::get('pages_to_watch');
     $this->fields_to_check = Fund_Parameters_Collection::get_income_funds_rules();
+
+    $this->generate_report();
   }
 
   /**
@@ -34,7 +37,9 @@ class Fund_Report {
     foreach ($funds as $fund_url) {
       $fund = new Fund($this->get_fund_id_and_class_from_url($fund_url));
 
-      $this->current_fund = $fund->get_json_data();
+      $this->current_fund = $fund->get_json_data('external');
+      $this->current_cached_fund = $fund->get_json_data('local');
+
       $this->generate_message_part_from_fund();
     }
   }
@@ -55,6 +60,7 @@ class Fund_Report {
 
   private function generate_message_part_from_fund() {
     $json = $this->current_fund;
+    $cached_json = $this->current_cached_fund;
 
     if (empty($json)) {
       return null;
@@ -66,7 +72,7 @@ class Fund_Report {
       '<h1>Updates for %s. Current fund JSON date: %s, previous data JSON created: %s</h1><br>',
       $fund_name,
       $json->last_updated,
-      $json->last_updated
+      $cached_json->last_updated
     );
 
     foreach ($this->fields_to_check as $field => $rules) {
@@ -81,13 +87,32 @@ class Fund_Report {
       $comparing_result = $rules->compare($current_fund_value, $previous_fund_value);
 
       $this->message .= sprintf(
-        'The fund "%s" %s %s on %s - %s <br>',
+        'The fund "%s" %s (%s -> %s) on %s - %s <br>',
         $fund_name,
-        'lost',
-        $comparing_result['diff_value'] . '%',
+        $this->format_difference($comparing_result['diff_value']),
+        $previous_fund_value,
+        $current_fund_value,
         $comparing_result['title'],
-        '<span style="color: green">No alert</span>'
+        $this->get_alert_html($comparing_result['is_alert'])
       );
+    }
+  }
+
+  private function format_difference($difference) {
+    if ($difference === 0) {
+      return 'did not changed';
+    } elseif ($difference > 0) {
+      return 'raise of ' . abs($difference) . '%';
+    } else {
+      return 'lost ' . abs($difference) . '%';
+    }
+  }
+
+  private function get_alert_html($is_alert) {
+    if ($is_alert === true) {
+      return '<span style="color: red">Alert</span>';
+    } else {
+      return '<span style="color: green">No alert</span>';
     }
   }
 
