@@ -45,6 +45,10 @@ class Main {
       'id' => 'cron_jobs',
       'auto_activate' => false,
       'events' => [
+        'mst_4f_as_preload_screenshots_every_day' => [
+          'callback' => [ $screenshot_instance, 'preload_screenshots' ],
+          'interval_name' => 'daily',
+        ],
         'mst_4f_as_take_screenshots_every_day' => [
           'callback' => [ $screenshot_instance, 'take_and_send_all' ],
           'interval_name' => 'daily',

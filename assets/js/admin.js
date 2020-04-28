@@ -2,6 +2,7 @@ import AJAX from './classes/class.AJAX';
 
 class Admin {
   constructor() {
+    this.preloadScreenshotsButton = document.querySelector('.preload-screenshots');
     this.forceScreenshotsButton = document.querySelector('.force-screenshots');
     this.forceComparisonButton = document.querySelector('.force-comparison');
 
@@ -13,6 +14,10 @@ class Admin {
   }
 
   _initEventListeners() {
+    if (this.preloadScreenshotsButton) {
+      this.preloadScreenshotsButton.addEventListener('click', () => this._initPreloadScreenshotsButton());
+    }
+
     if (this.forceScreenshotsButton) {
       this.forceScreenshotsButton.addEventListener('click', () => this._initForceScreenshotsButton());
     }
@@ -20,6 +25,23 @@ class Admin {
     if (this.forceComparisonButton) {
       this.forceComparisonButton.addEventListener('click', () => this._initForceComparisonButton());
     }
+  }
+
+  _initPreloadScreenshotsButton() {
+    const _this = this;
+
+    AJAX.post({
+      action: 'mst_4f_preload_screenshots',
+      beforeSend() {
+        _this.preloadScreenshotsButton.disabled = true;
+      },
+      complete() {
+        _this.preloadScreenshotsButton.disabled = false;
+      },
+      success() {
+        alert('Completed successfully');
+      },
+    });
   }
 
   _initForceScreenshotsButton() {
