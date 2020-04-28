@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Maximumstart\Alert_System;
 
@@ -18,7 +19,7 @@ class Fund {
     $this->class_id = $options['class_id'];
   }
 
-  public static function get_fund_type($fund_category) {
+  public static function get_fund_type(string $fund_category): string {
     if (preg_match('/.*?(income|Income).*?/', $fund_category)) {
       return 'income';
     } else {
@@ -26,11 +27,11 @@ class Fund {
     }
   }
 
-  public function get_json_data($origin = 'external') {
+  public function get_json_data(string $origin = 'external') {
     return $this->get_current_json($this->get_json_path_by_fund_url($origin));
   }
 
-  private function get_current_json($path) {
+  private function get_current_json(string $path) {
     try {
       $json = file_get_contents($path);
       return json_decode($json);
@@ -40,7 +41,7 @@ class Fund {
     }
   }
 
-  private function get_json_path_by_fund_url($origin = 'external') {
+  private function get_json_path_by_fund_url(string $origin = 'external'): string {
     if ($origin === 'local') {
       return $this->local_jsons_path . '/fund.json';
     }

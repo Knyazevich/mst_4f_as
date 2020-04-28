@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Maximumstart\Alert_System;
 
@@ -33,11 +34,12 @@ class Fund_Report {
     }
   }
 
-  private function create_message() {
+  private function create_message(): string {
     $funds = explode("\n", str_replace("\r", '', $this->funds_to_check));
 
     if (empty($funds)) {
-      return null;
+      Logger::log('error', [ 'error' => '$this->funds_to_check must not me empty' ]);
+      exit;
     }
 
     foreach ($funds as $fund_url) {
@@ -52,7 +54,7 @@ class Fund_Report {
     return $this->message;
   }
 
-  private function get_fund_id_and_class_from_url($url) {
+  private function get_fund_id_and_class_from_url(string $url): array {
     $url_query = wp_parse_url($url, PHP_URL_QUERY);
     wp_parse_str($url_query, $queries);
 
@@ -71,7 +73,7 @@ class Fund_Report {
     $cached_json = $this->current_cached_fund;
 
     if (empty($json)) {
-      return null;
+      return;
     }
 
     $fund_name = $json->fund_name->value;
@@ -94,6 +96,14 @@ class Fund_Report {
 
       $comparing_result = $rules->compare($current_fund_value, $previous_fund_value);
 
+      if (is_object($previous_fund_value)) {
+        $previous_fund_value = 'Object';
+      }
+
+      if (is_object($current_fund_value)) {
+        $current_fund_value = 'Object';
+      }
+
       $this->message .= sprintf(
         'The fund "%s" %s (%s -> %s) on %s - %s <br>',
         $fund_name,
@@ -113,7 +123,7 @@ class Fund_Report {
    * @param float $difference Difference percentage.
    * @return string Formatted string.
    */
-  private function format_difference($is_equal, $difference) {
+  private function format_difference(bool $is_equal, float $difference): string {
     if ($difference === 0.0 && $is_equal) {
       return 'did not changed';
     } elseif ($difference === 0.0 && !$is_equal) {
@@ -125,7 +135,7 @@ class Fund_Report {
     }
   }
 
-  private function get_alert_html($is_alert) {
+  private function get_alert_html(bool $is_alert): string {
     if ($is_alert) {
       return '<span style="color: red">Alert</span>';
     } else {

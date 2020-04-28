@@ -1,6 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Maximumstart\Alert_System;
+
+use Exception;
 
 class Screenshot {
   private $API_KEY;
@@ -30,12 +33,12 @@ class Screenshot {
       $this->take_and_save_all(false);
       $this->send_screenshots();
       $this->remove_screenshots();
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
       Logger::log('error', [ 'error' => $e ]);
     }
   }
 
-  private function take_and_save_all($is_preload = false) {
+  private function take_and_save_all(bool $is_preload = false) {
     $pages = explode("\n", str_replace("\r", '', $this->pages_to_screenshot));
 
     foreach ($pages as $page) {
@@ -54,12 +57,12 @@ class Screenshot {
       return;
     }
 
-    $this->attachments = array_map(function ($screenshot) {
+    $this->attachments = array_map(function (string $screenshot) {
       return $this->screenshot_path . $screenshot;
     }, $screenshots);
   }
 
-  private function take($page_url, $fresh = false) {
+  private function take(string $page_url, bool $fresh = false): array {
     if (empty($this->API_KEY)) {
       Logger::log('error', [ 'error' => 'ERROR: ApiFlash key must be provided' ]);
       wp_die('ERROR: ApiFlash key must be provided ' . print_r(debug_backtrace(), 1));
@@ -84,6 +87,8 @@ class Screenshot {
     }
 
     $this->screenshots_links[] = $json->url;
+
+    return $this->screenshots_links;
   }
 
   private function download_screenshots() {
@@ -128,7 +133,7 @@ class Screenshot {
   public function preload_screenshots() {
     try {
       $this->take_and_save_all(true);
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
       Logger::log('error', [ 'error' => $e ]);
     }
   }
