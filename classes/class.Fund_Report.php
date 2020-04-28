@@ -97,7 +97,7 @@ class Fund_Report {
       $this->message .= sprintf(
         'The fund "%s" %s (%s -> %s) on %s - %s <br>',
         $fund_name,
-        $this->format_difference($comparing_result['diff_value']),
+        $this->format_difference($comparing_result['is_equal'], $comparing_result['diff_value']),
         $previous_fund_value,
         $current_fund_value,
         $comparing_result['title'],
@@ -106,9 +106,18 @@ class Fund_Report {
     }
   }
 
-  private function format_difference($difference) {
-    if ($difference === 0) {
+  /**
+   * Returns formatted string to paste in the message.
+   *
+   * @param bool $is_equal
+   * @param float $difference Difference percentage.
+   * @return string Formatted string.
+   */
+  private function format_difference($is_equal, $difference) {
+    if ($difference === 0.0 && $is_equal) {
       return 'did not changed';
+    } elseif ($difference === 0.0 && !$is_equal) {
+      return 'changed';
     } elseif ($difference > 0) {
       return 'raise of ' . abs($difference) . '%';
     } else {
@@ -117,7 +126,7 @@ class Fund_Report {
   }
 
   private function get_alert_html($is_alert) {
-    if ($is_alert === true) {
+    if ($is_alert) {
       return '<span style="color: red">Alert</span>';
     } else {
       return '<span style="color: green">No alert</span>';
