@@ -3,6 +3,7 @@
 namespace Maximumstart\Alert_System;
 
 use DateTime;
+use Exception;
 
 class Fund_Parameter {
   private $title;
@@ -26,17 +27,22 @@ class Fund_Parameter {
   }
 
   public function compare($current, $previous) {
-    $is_equal = $this->get_comparing_method()($current, $previous);
-    $percentage_difference = $this->percentage_difference($current, $previous);
+    try {
+      $is_equal = $this->get_comparing_method()($current, $previous);
+      $percentage_difference = $this->percentage_difference($current, $previous);
 
-    return [
-      'title' => $this->title,
-      'is_equal' => $is_equal,
-      'diff_type' => $this->diff_type,
-      'diff_value' => $percentage_difference,
-      'is_alert' => $this->is_alert($this->diff_type, $this->change_percentage, $percentage_difference),
-      'change_percentage' => $this->change_percentage,
-    ];
+      return [
+        'title' => $this->title,
+        'is_equal' => $is_equal,
+        'diff_type' => $this->diff_type,
+        'diff_value' => $percentage_difference,
+        'is_alert' => $this->is_alert($this->diff_type, $this->change_percentage, $percentage_difference),
+        'change_percentage' => $this->change_percentage,
+      ];
+    } catch (Exception $e) {
+      Logger::log('error', [ 'error' => $e ]);
+      return null;
+    }
   }
 
   private function get_comparing_method() {
@@ -116,6 +122,6 @@ class Fund_Parameter {
 
   private function compare_year_returns_array($current, $previous) {
 //    return (bool) sizeof(array_diff($current, $previous));
-      return false;
-    }
+    return false;
+  }
 }

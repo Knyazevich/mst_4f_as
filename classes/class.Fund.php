@@ -35,6 +35,7 @@ class Fund {
       $json = file_get_contents($path);
       return json_decode($json);
     } catch (Exception $e) {
+      Logger::log('error', [ 'error' => $e ]);
       return null;
     }
   }

@@ -22,16 +22,16 @@ class Screenshot {
     $this->screenshots_links = [];
   }
 
+  /**
+   * Used as an entry for the cron task.
+   * */
   public function take_and_send_all() {
     try {
       $this->take_and_save_all(false);
       $this->send_screenshots();
       $this->remove_screenshots();
     } catch (\Exception $e) {
-      do_action('logger', [
-        'errror' => $e,
-        'status' => 'error'
-      ]);
+      Logger::log('error', [ 'error' => $e ]);
     }
   }
 
@@ -61,11 +61,7 @@ class Screenshot {
 
   private function take($page_url, $fresh = false) {
     if (empty($this->API_KEY)) {
-      do_action('logger', [
-        'errror' => 'ERROR: ApiFlash key must be provided',
-        'status' => 'error'
-      ]);
-
+      Logger::log('error', [ 'error' => 'ERROR: ApiFlash key must be provided' ]);
       wp_die('ERROR: ApiFlash key must be provided ' . print_r(debug_backtrace(), 1));
     }
 
@@ -83,11 +79,7 @@ class Screenshot {
     $json = json_decode(file_get_contents($request_url));
 
     if (empty($json)) {
-      do_action('logger', [
-        'error' => 'Maximum api call count reached.',
-        'status' => 'error'
-      ]);
-
+      Logger::log('error', [ 'error' => 'Maximum api call count reached' ]);
       wp_die();
     }
 
@@ -137,10 +129,7 @@ class Screenshot {
     try {
       $this->take_and_save_all(true);
     } catch (\Exception $e) {
-      do_action('logger', [
-        'errror' => $e,
-        'status' => 'error'
-      ]);
+      Logger::log('error', [ 'error' => $e ]);
     }
   }
 }

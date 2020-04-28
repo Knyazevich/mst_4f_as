@@ -28,6 +28,7 @@ require plugin_dir_path(__FILE__) . 'classes/class.Settings_Page.php';
 require plugin_dir_path(__FILE__) . 'classes/class.Screenshot.php';
 require plugin_dir_path(__FILE__) . 'classes/class.Fund_Report.php';
 require plugin_dir_path(__FILE__) . 'classes/class.AJAX.php';
+require plugin_dir_path(__FILE__) . 'classes/class.Logger.php';
 
 class Main {
   public function __construct() {

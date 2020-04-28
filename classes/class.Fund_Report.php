@@ -2,6 +2,8 @@
 
 namespace Maximumstart\Alert_System;
 
+use Exception;
+
 require plugin_dir_path(__FILE__) . 'class.Fund_Parameters_Collection.php';
 require plugin_dir_path(__FILE__) . 'class.Fund.php';
 
@@ -23,14 +25,20 @@ class Fund_Report {
    * Used as an entry for the cron task.
    * */
   public function generate_report() {
-    $this->create_message();
-    $this->send_data();
+    try {
+      $this->create_message();
+      $this->send_data();
+    } catch (Exception $e) {
+      Logger::log('error', [ 'error' => $e ]);
+    }
   }
 
   private function create_message() {
     $funds = explode("\n", str_replace("\r", '', $this->funds_to_check));
 
-    if (empty($funds)) return;
+    if (empty($funds)) {
+      return null;
+    }
 
     foreach ($funds as $fund_url) {
       $fund = new Fund($this->get_fund_id_and_class_from_url($fund_url));
@@ -40,6 +48,8 @@ class Fund_Report {
 
       $this->generate_message_part_from_fund();
     }
+
+    return $this->message;
   }
 
   private function get_fund_id_and_class_from_url($url) {
