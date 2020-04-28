@@ -78,6 +78,14 @@ class Settings_Page {
       'mst_4f_as_options',
       'mst_4f_as_screenshots_options_section'
     );
+
+    add_settings_field(
+      'mst_4f_as_force_screenshots',
+      esc_html__('Force take screenshots', 'mst_4f_as'),
+      [ $this, 'render_take_force_screenshots_button' ],
+      'mst_4f_as_options',
+      'mst_4f_as_screenshots_options_section'
+    );
   }
 
   public function register_data_changing_fields() {
@@ -101,6 +109,14 @@ class Settings_Page {
       'mst_4f_as_pages_to_watch',
       esc_html__('Pages to watch', 'mst_4f_as'),
       [ $this, 'render_pages_to_data_changing_watch_field' ],
+      'mst_4f_as_options',
+      'mst_4f_as_data_changing_options_section'
+    );
+
+    add_settings_field(
+      'mst_4f_as_force_compare_funds',
+      esc_html__('Force compare funds', 'mst_4f_as'),
+      [ $this, 'render_force_compare_funds_button' ],
       'mst_4f_as_options',
       'mst_4f_as_data_changing_options_section'
     );
@@ -140,6 +156,10 @@ class Settings_Page {
     printf('<textarea name="mst_4f_as_options[pages_to_screenshot]" style="width: 400px; height: 300px">%s</textarea>', $value);
   }
 
+  public function render_take_force_screenshots_button() {
+    echo '<button type="button" class="button button-primary force-screenshots">Force take screenshots</button>';
+  }
+
   public function render_do_data_changing_alerts_enabled_field() {
     $value = DB_Options::get('data_changing_alerts_enabled');
     printf('<input type="checkbox" name="mst_4f_as_options[data_changing_alerts_enabled]" %s value="1">', checked($value, true, false));
@@ -153,5 +173,9 @@ class Settings_Page {
   public function render_pages_to_data_changing_watch_field() {
     $value = esc_html(DB_Options::get('pages_to_watch'));
     printf('<textarea name="mst_4f_as_options[pages_to_watch]" style="width: 400px; height: 300px">%s</textarea>', $value);
+  }
+
+  public function render_force_compare_funds_button() {
+    echo '<button type="button" class="button button-primary force-comparison">Force compare funds</button>';
   }
 }

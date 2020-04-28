@@ -27,12 +27,14 @@ require plugin_dir_path(__FILE__) . 'classes/class.DB_Options.php';
 require plugin_dir_path(__FILE__) . 'classes/class.Settings_Page.php';
 require plugin_dir_path(__FILE__) . 'classes/class.Screenshot.php';
 require plugin_dir_path(__FILE__) . 'classes/class.Fund_Report.php';
+require plugin_dir_path(__FILE__) . 'classes/class.AJAX.php';
 
 class Main {
   public function __construct() {
     $this->set_screenshots_taking_cron_task();
     $this->init_actions();
     $this->init_admin_setting_page();
+    $this->init_AJAX_handlers();
   }
 
   public function set_screenshots_taking_cron_task() {
@@ -57,12 +59,17 @@ class Main {
 
   private function init_actions() {
     add_action('plugins_loaded', [ $this, 'load_text_domain' ]);
+    add_action('admin_enqueue_scripts', [ $this, 'add_admin_script' ]);
     register_activation_hook(__FILE__, [ $this, 'setup_plugin_on_activation' ]);
     register_deactivation_hook(__FILE__, [ $this, 'setup_plugin_on_deactivation' ]);
   }
 
   private function init_admin_setting_page() {
     new Settings_Page();
+  }
+
+  public function init_AJAX_handlers() {
+    new AJAX();
   }
 
   public function load_text_domain() {
@@ -80,6 +87,21 @@ class Main {
 
   public function setup_plugin_on_deactivation() {
     Cron::deactivate('cron_jobs');
+  }
+
+  public function add_admin_script() {
+    wp_enqueue_script(
+      'mst-4f-as-admin',
+      plugins_url('assets/js/admin.min.js', __FILE__),
+      [],
+      MST_4F_AS_VER,
+      true
+    );
+
+    wp_localize_script('mst-4f-as-admin', 'mst_4f_as_state', [
+      'ajaxURL' => admin_url('admin-ajax.php'),
+      'i18n' => [],
+    ]);
   }
 }
 

@@ -115,6 +115,7 @@ class Fund_Parameter {
   }
 
   private function compare_year_returns_array($current, $previous) {
-    return (bool) sizeof(array_diff($current, $previous));
-  }
+//    return (bool) sizeof(array_diff($current, $previous));
+      return false;
+    }
 }

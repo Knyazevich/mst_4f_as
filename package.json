@@ -1,0 +1,39 @@
+{
+  "name": "mst_4f_as",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "private": true,
+  "scripts": {
+    "build": "npm run fix && webpack --config webpack.config.js",
+    "lint": "eslint ./assets/js",
+    "fix": "eslint ./assets/js --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Knyazevich/mst_4f_as.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Knyazevich/mst_4f_as/issues"
+  },
+  "homepage": "https://github.com/Knyazevich/mst_4f_as#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "babel-loader": "^8.1.0",
+    "core-js": "^3.6.5",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.20.2",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {}
+}

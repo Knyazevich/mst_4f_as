@@ -17,8 +17,6 @@ class Fund_Report {
     $this->recipients_emails = DB_Options::get('data_changing_recipients_emails');
     $this->funds_to_check = DB_Options::get('pages_to_watch');
     $this->fields_to_check = Fund_Parameters_Collection::get_income_funds_rules();
-
-    $this->generate_report();
   }
 
   /**

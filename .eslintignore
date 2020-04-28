@@ -1,0 +1,4 @@
+assets/js/**/*.js
+assets/js/**/*.min.js
+!assets/js/classes/**/*.js
+!assets/js/admin.js

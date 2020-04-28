@@ -1,0 +1,19 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "debug": true,
+        "targets": {
+          "ie": "11",
+          "safari": "9"
+        },
+        "corejs": {
+          "version": 3,
+          "proposals": false
+        },
+        "useBuiltIns": "usage"
+      }
+    ]
+  ]
+}
