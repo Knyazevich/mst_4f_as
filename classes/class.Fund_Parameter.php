@@ -22,7 +22,7 @@ class Fund_Parameter {
    * @param int|float $change_percentage Changing percentage. In $diff_type is 'inc' or 'dec, then you can set the
    * difference percentage as a integer or float. Default to false.
    */
-  public function __construct(string $title, string $handler, string $diff_type = 'any', float $change_percentage = 0) {
+  public function __construct(string $title, string $handler, string $diff_type = 'any', int $change_percentage = 0) {
     $this->title = $title;
     $this->handler = $handler;
     $this->diff_type = $diff_type;

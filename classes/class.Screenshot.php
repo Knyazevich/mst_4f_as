@@ -74,6 +74,7 @@ class Screenshot {
       'format' => 'jpeg',
       'full_page' => true,
       'fresh' => $fresh,
+      'ttl' => 2 * 3600,
       'delay' => 2,
       'quality' => 60,
       'response_type' => 'json'

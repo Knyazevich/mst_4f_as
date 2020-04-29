@@ -92,7 +92,7 @@ class Fund_Report {
 
       $previous_fund_value = array_reduce(explode('.', $field), function ($o, $p) {
         return $o->$p;
-      }, $json);
+      }, $cached_json);
 
       $comparing_result = $rules->compare($current_fund_value, $previous_fund_value);
 
