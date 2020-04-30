@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Maximumstart\Alert_System;
 
 class DB_Options {
-  public static function get($name) {
+  public static function get(string $name) {
     if (!empty(get_option('mst_4f_as_options')[$name])) {
       return get_option('mst_4f_as_options')[$name];
     } else {
@@ -31,7 +32,7 @@ class DB_Options {
     return get_option('mst_4f_as_options');
   }
 
-  public static function get_name() {
+  public static function get_name(): string {
     return 'mst_4f_as_options';
   }
 }

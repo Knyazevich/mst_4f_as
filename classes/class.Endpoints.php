@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Maximumstart\Alert_System;
 
-use Exception;
-
 class Endpoints {
   public function __construct() {
     $this->init_actions();
@@ -27,16 +25,16 @@ class Endpoints {
 
   public function parse_request(&$wp) {
     if (!array_key_exists('alert-system', $wp->query_vars)) {
-      return;
+      wp_send_json_error();
     }
 
-    try {
-      $this->get_callback($wp->query_vars['alert-system'])();
-    } catch (Exception $e) {
-      Logger::log('error', [ 'error' => $e ]);
-    }
+    $response = $this->get_callback($wp->query_vars['alert-system'])();
 
-    die();
+    if ($response === true) {
+      wp_send_json_success();
+    } else {
+      wp_send_json_error($response);
+    }
   }
 
   private function get_callback($action): callable {
@@ -50,8 +48,8 @@ class Endpoints {
     ];
 
     if (!$callbacks[$action]) {
-      return function () {
-        echo 'No such action';
+      return function(): string {
+        return 'No such action';
       };
     }
 

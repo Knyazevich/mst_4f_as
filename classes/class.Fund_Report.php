@@ -14,44 +14,54 @@ class Fund_Report {
   private $message;
   private $recipients_emails;
   private $current_fund;
-  private $current_cached_fund;
+  private $current_archived_fund;
 
   public function __construct() {
+    if (empty(DB_Options::get('data_changing_alerts_enabled'))) {
+      return;
+    }
+
     $this->recipients_emails = DB_Options::get('data_changing_recipients_emails');
     $this->funds_to_check = DB_Options::get('pages_to_watch');
     $this->fields_to_check = Fund_Parameters_Collection::get_income_funds_rules();
   }
 
-  /**
-   * Used as an entry for the cron task.
-   * */
-  public function generate_report() {
+  public function generate_report(): bool {
     try {
       $this->create_message();
       $this->send_data();
+      $this->remove_archived_funds();
+      $this->archive_funds();
+
+      return true;
     } catch (Exception $e) {
       Logger::log('error', [ 'error' => $e ]);
+      return false;
     }
   }
 
   private function create_message(): string {
-    $funds = explode("\n", str_replace("\r", '', $this->funds_to_check));
+    try {
+      $funds = explode("\n", str_replace("\r", '', $this->funds_to_check));
 
-    if (empty($funds)) {
+      if (empty($funds)) {
+        throw new Exception('There are no funds to compare.');
+      }
+
+      foreach ($funds as $fund_url) {
+        $fund = new Fund($this->get_fund_id_and_class_from_url($fund_url));
+
+        $this->current_fund = $fund->get_json_data('external');
+        $this->current_archived_fund = $fund->get_json_data('archived');
+
+        $this->generate_message_part_from_fund();
+      }
+
+      return $this->message;
+    } catch (Exception $e) {
       Logger::log('error', [ 'error' => '$this->funds_to_check must not me empty' ]);
-      exit;
+      return '';
     }
-
-    foreach ($funds as $fund_url) {
-      $fund = new Fund($this->get_fund_id_and_class_from_url($fund_url));
-
-      $this->current_fund = $fund->get_json_data('external');
-      $this->current_cached_fund = $fund->get_json_data('local');
-
-      $this->generate_message_part_from_fund();
-    }
-
-    return $this->message;
   }
 
   private function get_fund_id_and_class_from_url(string $url): array {
@@ -69,50 +79,51 @@ class Fund_Report {
   }
 
   private function generate_message_part_from_fund() {
-    $json = $this->current_fund;
-    $cached_json = $this->current_cached_fund;
+    try {
+      $json = $this->current_fund;
+      $archived_json = $this->current_archived_fund;
 
-    if (empty($json)) {
-      return;
-    }
-
-    $fund_name = $json->fund_name->value;
-
-    $this->message .= sprintf(
-      '<h1>Updates for %s. Current fund JSON date: %s, previous data JSON created: %s</h1><br>',
-      $fund_name,
-      $json->last_updated,
-      $cached_json->last_updated
-    );
-
-    foreach ($this->fields_to_check as $field => $rules) {
-      $current_fund_value = array_reduce(explode('.', $field), function ($o, $p) {
-        return $o->$p;
-      }, $json);
-
-      $previous_fund_value = array_reduce(explode('.', $field), function ($o, $p) {
-        return $o->$p;
-      }, $cached_json);
-
-      $comparing_result = $rules->compare($current_fund_value, $previous_fund_value);
-
-      if (is_object($previous_fund_value)) {
-        $previous_fund_value = 'Object';
+      if (empty($json) || empty($archived_json)) {
+        throw new Exception('Funds data must not be empty.');
       }
 
-      if (is_object($current_fund_value)) {
-        $current_fund_value = 'Object';
-      }
-
+      $fund_name = $json->fund_name->value;
       $this->message .= sprintf(
-        'The fund "%s" %s (%s -> %s) on %s - %s <br>',
+        '<h1>Updates for %s. Current fund JSON date: %s, previous data JSON created: %s</h1><br>',
         $fund_name,
-        $this->format_difference($comparing_result['is_equal'], $comparing_result['diff_value']),
-        $previous_fund_value,
-        $current_fund_value,
-        $comparing_result['title'],
-        $this->get_alert_html($comparing_result['is_alert'])
+        $json->last_updated,
+        $archived_json->last_updated
       );
+
+      foreach ($this->fields_to_check as $field => $rules) {
+        $current_fund_value = array_reduce(explode('.', $field), function($o, $p) {
+          return $o->$p;
+        }, $json);
+
+        $previous_fund_value = array_reduce(explode('.', $field), function($o, $p) {
+          return $o->$p;
+        }, $archived_json);
+
+        $comparing_result = $rules->compare($current_fund_value, $previous_fund_value);
+
+        // Allows avoid an "Array to string conversion" error
+        if (is_object($previous_fund_value) || is_object($current_fund_value)) {
+          $previous_fund_value = 'Object';
+          $current_fund_value = 'Object';
+        }
+
+        $this->message .= sprintf(
+          'The fund "%s" %s (%s -> %s) on %s - %s <br>',
+          $fund_name,
+          $this->format_difference($comparing_result['is_equal'], $comparing_result['diff_value']),
+          $previous_fund_value,
+          $current_fund_value,
+          $comparing_result['title'],
+          $this->get_alert_html($comparing_result['is_alert'])
+        );
+      }
+    } catch (Exception $e) {
+      Logger::log('error', [ 'error' => $e ]);
     }
   }
 
@@ -144,18 +155,69 @@ class Fund_Report {
   }
 
   private function send_data() {
-    $recipients = explode("\n", str_replace("\r", '', $this->recipients_emails));
-    $date = date('Y-m-d');
+    try {
+      $recipients = explode("\n", str_replace("\r", '', $this->recipients_emails));
+      $date = date('Y-m-d');
 
-    if (empty($this->message) || !sizeof($recipients)) return;
+      if (empty($this->message)) {
+        throw new Exception('Message is empty.');
+      }
 
-    foreach ($recipients as $recipient) {
-      wp_mail(
-        sanitize_email($recipient),
-        sprintf('[%s] Report of the 4F funds', $date),
-        $this->message,
-        [ 'content-type: text/html' ]
-      );
+      if (!sizeof($recipients)) {
+        throw new Exception('There are no recipients for the report.');
+      }
+
+      foreach ($recipients as $recipient) {
+        wp_mail(
+          sanitize_email($recipient),
+          sprintf('[%s] Report of the 4F funds', $date),
+          $this->message,
+          [ 'content-type: text/html' ]
+        );
+      }
+    } catch (Exception $e) {
+      Logger::log('error', [ 'error' => $e ]);
+    }
+  }
+
+  /**
+   * Clears the archived funds folder.
+   */
+  private function remove_archived_funds() {
+    try {
+      if (empty(MST_4F_AS_FUNDS_ARCHIVE_PATH)) {
+        throw new Exception('MST_4F_AS_FUNDS_ARCHIVE_PATH constant is empty.');
+      }
+
+      $files = glob(MST_4F_AS_FUNDS_ARCHIVE_PATH . '/*');
+
+      foreach ($files as $file) {
+        if (is_file($file)) {
+          unlink($file);
+        }
+      }
+    } catch (Exception $e) {
+      Logger::log('error', [ 'error' => $e ]);
+    }
+  }
+
+  /**
+   * Copies current funds data to the archive folder.
+   */
+  private function archive_funds() {
+    try {
+      $funds = explode("\n", str_replace("\r", '', $this->funds_to_check));
+
+      if (empty($funds)) {
+        throw new Exception('There are no funds to check.');
+      }
+
+      foreach ($funds as $fund_url) {
+        $fund = new Fund($this->get_fund_id_and_class_from_url($fund_url));
+        $fund->archive_fund();
+      }
+    } catch (Exception $e) {
+      Logger::log('error', [ 'error' => $e ]);
     }
   }
 }

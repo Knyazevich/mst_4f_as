@@ -9,8 +9,11 @@
       "email": "psknyazevich@gmail.com"
     }
   ],
+  "require-dev": {
+    "10up/wp_mock": "0.4.2",
+    "phpunit/phpunit": "8.5"
+  },
   "require": {
-    "phpunit/phpunit": "8.5",
     "ext-json": "*"
   }
 }

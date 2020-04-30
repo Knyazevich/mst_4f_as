@@ -55,16 +55,25 @@ class Fund_Parameter {
   }
 
   private function get_comparing_method(): callable {
-    // All comparing methods must return true if both values are equal.
-    $methods = [
-      'numeric' => [ $this, 'compare_numbers' ],
-      'string' => [ $this, 'compare_strings' ],
-      'date' => [ $this, 'compare_dates' ],
-      'array' => [ $this, 'compare_array' ],
-      'object' => [ $this, 'compare_object' ],
-    ];
+    try {
+      // All comparing methods must return true if both values are equal.
+      $methods = [
+        'numeric' => [ $this, 'compare_numbers' ],
+        'string' => [ $this, 'compare_strings' ],
+        'date' => [ $this, 'compare_dates' ],
+        'array' => [ $this, 'compare_array' ],
+        'object' => [ $this, 'compare_object' ],
+      ];
 
-    return $methods[$this->handler];
+      if (empty($methods[$this->handler])) {
+        throw new Exception(sprintf('Called undefined method %s.', $this->handler));
+      }
+
+      return $methods[$this->handler];
+    } catch (Exception $e) {
+      Logger::log('error', [ 'error' => $e ]);
+      exit;
+    }
   }
 
   private function percentage_difference($current, $previous): float {

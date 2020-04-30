@@ -22,6 +22,18 @@ if (!defined('MST_4F_AS_VER')) {
   define('MST_4F_AS_VER', '1.0.0');
 }
 
+if (!defined('MST_4F_AS_FUNDS_ARCHIVE_PATH')) {
+  define('MST_4F_AS_FUNDS_EXTERNAL_PATH', ABSPATH . 'funds/data');
+}
+
+if (!defined('MST_4F_AS_FUNDS_ARCHIVE_PATH')) {
+  define('MST_4F_AS_FUNDS_ARCHIVE_PATH', plugin_dir_path(__FILE__) . 'funds');
+}
+
+if (!defined('MST_4F_AS_SCREENSHOTS_PATH')) {
+  define('MST_4F_AS_SCREENSHOTS_PATH', plugin_dir_path(__FILE__) . 'screenshots');
+}
+
 require plugin_dir_path(__FILE__) . 'classes/class.DB_Options.php';
 require plugin_dir_path(__FILE__) . 'classes/class.Settings_Page.php';
 require plugin_dir_path(__FILE__) . 'classes/class.Screenshot.php';
