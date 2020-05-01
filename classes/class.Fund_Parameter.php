@@ -177,12 +177,16 @@ class Fund_Parameter {
   }
 
   private function compare_dates(string $current, string $previous): bool {
-    $current_date = new DateTime(str_replace('/', '-', $current));
-    $previous_date = new DateTime(str_replace('/', '-', $previous));
+    try {
+      $current_date = new DateTime(str_replace('/', '-', $current));
+      $previous_date = new DateTime(str_replace('/', '-', $previous));
+      $interval = $previous_date->diff($current_date);
 
-    $interval = $previous_date->diff($current_date);
-
-    return $interval->days === 0;
+      return $interval->days === 0;
+    } catch (Exception $e) {
+      Logger::log('error', [ 'error' => $e ]);
+      return false;
+    }
   }
 
   private function compare_array(array $current, array $previous): bool {

@@ -5,11 +5,8 @@ namespace Maximumstart\Alert_System;
 
 use Exception;
 
-require plugin_dir_path( __DIR__ ) . 'vendor/autoload.php';
-
 class Fund_Report {
   private $funds_to_check;
-  private $fields_to_check;
   private $message;
   private $recipients_emails;
   private $current_fund;
@@ -22,7 +19,6 @@ class Fund_Report {
 
     $this->recipients_emails = DB_Options::get('data_changing_recipients_emails');
     $this->funds_to_check = DB_Options::get('pages_to_watch');
-    $this->fields_to_check = Fund_Parameters_Collection::get_income_funds_rules();
   }
 
   public function generate_report(): bool {
@@ -58,7 +54,7 @@ class Fund_Report {
 
       return $this->message;
     } catch (Exception $e) {
-      Logger::log('error', [ 'error' => '$this->funds_to_check must not me empty' ]);
+      Logger::log('error', [ 'error' => $e ]);
       return '';
     }
   }
@@ -82,8 +78,16 @@ class Fund_Report {
       $json = $this->current_fund;
       $archived_json = $this->current_archived_fund;
 
+      $fund_type = Fund::get_fund_type($json->fund_category->value);
+      $collection = new Fund_Parameters_Collection();
+      $ruleset = $collection->get_rules($fund_type);
+
       if (empty($json) || empty($archived_json)) {
         throw new Exception('Funds data must not be empty.');
+      }
+
+      if (!sizeof($ruleset)) {
+        throw new Exception(sprintf('No rules for the fund type: %s', $fund_type));
       }
 
       $fund_name = $json->fund_name->value;
@@ -94,7 +98,7 @@ class Fund_Report {
         $archived_json->last_updated
       );
 
-      foreach ($this->fields_to_check as $field => $rules) {
+      foreach ($ruleset as $field => $rules) {
         $current_fund_value = array_reduce(explode('.', $field), function($o, $p) {
           return $o->$p;
         }, $json);
