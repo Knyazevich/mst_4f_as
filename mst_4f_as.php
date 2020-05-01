@@ -34,13 +34,7 @@ if (!defined('MST_4F_AS_SCREENSHOTS_PATH')) {
   define('MST_4F_AS_SCREENSHOTS_PATH', plugin_dir_path(__FILE__) . 'screenshots');
 }
 
-require plugin_dir_path(__FILE__) . 'classes/class.DB_Options.php';
-require plugin_dir_path(__FILE__) . 'classes/class.Settings_Page.php';
-require plugin_dir_path(__FILE__) . 'classes/class.Screenshot.php';
-require plugin_dir_path(__FILE__) . 'classes/class.Fund_Report.php';
-require plugin_dir_path(__FILE__) . 'classes/class.AJAX.php';
-require plugin_dir_path(__FILE__) . 'classes/class.Logger.php';
-require plugin_dir_path(__FILE__) . 'classes/class.Endpoints.php';
+require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
 class Main {
   public function __construct() {

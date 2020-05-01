@@ -15,5 +15,10 @@
   },
   "require": {
     "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Maximumstart\\Alert_System\\": "classes/"
+    }
   }
 }

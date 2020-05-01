@@ -5,8 +5,7 @@ namespace Maximumstart\Alert_System;
 
 use Exception;
 
-require plugin_dir_path(__FILE__) . 'class.Fund_Parameters_Collection.php';
-require plugin_dir_path(__FILE__) . 'class.Fund.php';
+require plugin_dir_path( __DIR__ ) . 'vendor/autoload.php';
 
 class Fund_Report {
   private $funds_to_check;

@@ -2,7 +2,7 @@
 
 namespace Maximumstart\Alert_System;
 
-require plugin_dir_path(__FILE__) . 'class.Fund_Parameter.php';
+require plugin_dir_path( __DIR__ ) . 'vendor/autoload.php';
 
 class Fund_Parameters_Collection {
   public static function get_income_funds_rules() {

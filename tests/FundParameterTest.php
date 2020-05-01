@@ -3,8 +3,6 @@
 use Maximumstart\Alert_System\Fund_Parameter;
 use PHPUnit\Framework\TestCase;
 
-require dirname(__DIR__, 1) . '/classes/class.Fund_Parameter.php';
-
 class FundParameterTest extends TestCase {
   public function test_parameter_values_returning() {
     $first_parameter = new Fund_Parameter('First Parameter', 'numeric');
