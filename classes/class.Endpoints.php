@@ -25,7 +25,7 @@ class Endpoints {
 
   public function parse_request(&$wp) {
     if (!array_key_exists('alert-system', $wp->query_vars)) {
-      wp_send_json_error();
+      return;
     }
 
     $response = $this->get_callback($wp->query_vars['alert-system'])();
