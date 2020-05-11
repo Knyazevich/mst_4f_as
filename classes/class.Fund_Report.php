@@ -9,8 +9,6 @@ class Fund_Report {
   private $funds_to_check;
   private $message;
   private $recipients_emails;
-  private $current_fund;
-  private $current_archived_fund;
 
   public function __construct() {
     if (empty(DB_Options::get('data_changing_alerts_enabled'))) {
@@ -45,11 +43,11 @@ class Fund_Report {
 
       foreach ($funds as $fund_url) {
         $fund = new Fund($this->get_fund_id_and_class_from_url($fund_url));
+        $current_fund = $fund->get_json_data('external');
+        $current_archived_fund = $fund->get_json_data('archived');
 
-        $this->current_fund = $fund->get_json_data('external');
-        $this->current_archived_fund = $fund->get_json_data('archived');
-
-        $this->generate_message_part_from_fund();
+        $presenter = new EmailTablePresenter();
+        $this->message .= $presenter->get_output($current_fund, $current_archived_fund);
       }
 
       return $this->message;
@@ -71,90 +69,6 @@ class Fund_Report {
       'fund_id' => $queries['fund_id'],
       'class_id' => $queries['class_id'],
     ];
-  }
-
-  private function generate_message_part_from_fund() {
-    try {
-      $json = $this->current_fund;
-      $archived_json = $this->current_archived_fund;
-
-      $fund_type = Fund::get_fund_type($json->fund_category->value);
-      $collection = new Fund_Parameters_Collection();
-      $ruleset = $collection->get_rules($fund_type);
-
-      if (empty($json) || empty($archived_json)) {
-        throw new Exception('Funds data must not be empty.');
-      }
-
-      if (!sizeof($ruleset)) {
-        throw new Exception(sprintf('No rules for the fund type: %s', $fund_type));
-      }
-
-      $fund_name = $json->fund_name->value;
-      $this->message .= sprintf(
-        '<h1>Updates for %s. Current fund JSON date: %s, previous data JSON created: %s</h1><br>',
-        $fund_name,
-        $json->last_updated,
-        $archived_json->last_updated
-      );
-
-      foreach ($ruleset as $field => $rules) {
-        $current_fund_value = array_reduce(explode('.', $field), function($o, $p) {
-          return $o->$p;
-        }, $json);
-
-        $previous_fund_value = array_reduce(explode('.', $field), function($o, $p) {
-          return $o->$p;
-        }, $archived_json);
-
-        $comparing_result = $rules->compare($current_fund_value, $previous_fund_value);
-
-        // Allows avoid an "Array to string conversion" error
-        if (is_object($previous_fund_value) || is_object($current_fund_value)) {
-          $previous_fund_value = 'Object';
-          $current_fund_value = 'Object';
-        }
-
-        $this->message .= sprintf(
-          'The fund "%s" %s (%s -> %s) on %s - %s <br>',
-          $fund_name,
-          $this->format_difference($comparing_result['is_equal'], $comparing_result['diff_value']),
-          $previous_fund_value,
-          $current_fund_value,
-          $comparing_result['title'],
-          $this->get_alert_html($comparing_result['is_alert'])
-        );
-      }
-    } catch (Exception $e) {
-      Logger::log('error', [ 'error' => $e ]);
-    }
-  }
-
-  /**
-   * Returns formatted string to paste in the message.
-   *
-   * @param bool $is_equal
-   * @param float $difference Difference percentage.
-   * @return string Formatted string.
-   */
-  private function format_difference(bool $is_equal, float $difference): string {
-    if ($difference === 0.0 && $is_equal) {
-      return 'did not changed';
-    } elseif ($difference === 0.0 && !$is_equal) {
-      return 'changed';
-    } elseif ($difference > 0) {
-      return 'raise of ' . abs($difference) . '%';
-    } else {
-      return 'lost ' . abs($difference) . '%';
-    }
-  }
-
-  private function get_alert_html(bool $is_alert): string {
-    if ($is_alert) {
-      return '<span style="color: red">Alert</span>';
-    } else {
-      return '<span style="color: green">No alert</span>';
-    }
   }
 
   private function send_data() {
