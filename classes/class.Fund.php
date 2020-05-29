@@ -79,9 +79,10 @@ class Fund {
   public function get_json_data(string $origin = 'external') {
     $path = $this->get_json_path_by_fund_url($origin);
 
-    if ($origin === 'archived' && !$this->archived_file_exists($path)) {
-      return $this->get_current_json($this->get_json_path_by_fund_url('external'));
-    }
+    // TODO: Check if everything works ok with the code below.
+//    if ($origin === 'archived' && !$this->archived_file_exists($path)) {
+//      return $this->get_current_json($this->get_json_path_by_fund_url('external'));
+//    }
 
     return $this->get_current_json($this->get_json_path_by_fund_url($origin));
   }
