@@ -59,7 +59,7 @@ class Fund {
       }
 
       return sprintf(
-        '%s/2_%s__%s.json',
+        '%s/3_%s__%s.json',
         $origin === 'external' ? MST_4F_AS_FUNDS_EXTERNAL_PATH : MST_4F_AS_FUNDS_ARCHIVE_PATH,
         strtoupper($this->fund_id),
         strtoupper($this->class_id)
@@ -79,10 +79,9 @@ class Fund {
   public function get_json_data(string $origin = 'external') {
     $path = $this->get_json_path_by_fund_url($origin);
 
-    // TODO: Check if everything works ok with the code below.
-//    if ($origin === 'archived' && !$this->archived_file_exists($path)) {
-//      return $this->get_current_json($this->get_json_path_by_fund_url('external'));
-//    }
+    if ($origin === 'archived' && !$this->archived_file_exists($path)) {
+      return $this->get_current_json($this->get_json_path_by_fund_url('external'));
+    }
 
     return $this->get_current_json($this->get_json_path_by_fund_url($origin));
   }

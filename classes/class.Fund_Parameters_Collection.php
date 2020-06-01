@@ -5,8 +5,8 @@ namespace Maximumstart\Alert_System;
 class Fund_Parameters_Collection {
   public function get_rules(string $fund_type): array {
     $sets = [
-      'income' => [$this, 'get_income_funds_rules'],
-      'equity' => [$this, 'get_equity_funds_rules'],
+      'income' => [ $this, 'get_income_funds_rules' ],
+      'equity' => [ $this, 'get_equity_funds_rules' ],
     ];
 
     if (isset($sets[$fund_type])) {
@@ -162,15 +162,331 @@ class Fund_Parameters_Collection {
         1
       ),
 
-      'performance.calendar_year' => new Fund_Parameter(
-        'Calendar year returns',
-        'array',
+      'performance.calendar_year.2009.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2009)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2010.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2010)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2011.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2011)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2012.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2012)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2013.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2013)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2014.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2014)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2015.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2015)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2016.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2016)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2017.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2017)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2018.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2018)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2019.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2019)',
+        'numeric',
         'any'
       ),
 
-      'risk_measures' => new Fund_Parameter(
-        'Risk Measures',
-        'object',
+      'performance.calendar_year.2009.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2009)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2010.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2010)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2011.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2011)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2012.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2012)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2013.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2013)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2014.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2014)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2015.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2015)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2016.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2016)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2017.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2017)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2018.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2018)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2019.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2019)',
+        'numeric',
+        'any'
+      ),
+
+      'risk_measures.alpha.1YR' => new Fund_Parameter(
+        'Risk Measures (Alpha 1YR)',
+        'numeric',
+        'any',
+        1
+      ),
+      'risk_measures.alpha.3YR' => new Fund_Parameter(
+        'Risk Measures (Alpha 3YR)',
+        'numeric',
+        'any',
+        1
+      ),
+      'risk_measures.alpha.5YR' => new Fund_Parameter(
+        'Risk Measures (Alpha 5YR)',
+        'numeric',
+        'any',
+        1
+      ),
+      'risk_measures.alpha.7YR' => new Fund_Parameter(
+        'Risk Measures (Alpha 7YR)',
+        'numeric',
+        'any',
+        1
+      ),
+      'risk_measures.alpha.10YR' => new Fund_Parameter(
+        'Risk Measures (Alpha 10YR)',
+        'numeric',
+        'any',
+        1
+      ),
+
+      'risk_measures.beta.1YR' => new Fund_Parameter(
+        'Risk Measures (Beta 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.beta.3YR' => new Fund_Parameter(
+        'Risk Measures (Beta 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.beta.5YR' => new Fund_Parameter(
+        'Risk Measures (Beta 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.beta.7YR' => new Fund_Parameter(
+        'Risk Measures (Beta 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.beta.10YR' => new Fund_Parameter(
+        'Risk Measures (Beta 10YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+
+      'risk_measures.r-squared.1YR' => new Fund_Parameter(
+        'Risk Measures (R-Squared 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.r-squared.3YR' => new Fund_Parameter(
+        'Risk Measures (R-Squared 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.r-squared.5YR' => new Fund_Parameter(
+        'Risk Measures (R-Squared 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.r-squared.7YR' => new Fund_Parameter(
+        'Risk Measures (R-Squared 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.r-squared.10YR' => new Fund_Parameter(
+        'Risk Measures (R-Squared 10YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+
+      'risk_measures.sharpe_ratio.1YR' => new Fund_Parameter(
+        'Risk Measures (Sharpe Ratio 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.sharpe_ratio.3YR' => new Fund_Parameter(
+        'Risk Measures (Sharpe Ratio 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.sharpe_ratio.5YR' => new Fund_Parameter(
+        'Risk Measures (Sharpe Ratio 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.sharpe_ratio.7YR' => new Fund_Parameter(
+        'Risk Measures (Sharpe Ratio 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.sharpe_ratio.10YR' => new Fund_Parameter(
+        'Risk Measures (Sharpe Ratio 10YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+
+      'risk_measures.fund_standard_deviation.1YR' => new Fund_Parameter(
+        'Risk Measures (Fund Standard Deviation 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.fund_standard_deviation.3YR' => new Fund_Parameter(
+        'Risk Measures (Fund Standard Deviation 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.fund_standard_deviation.5YR' => new Fund_Parameter(
+        'Risk Measures (Fund Standard Deviation 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.fund_standard_deviation.7YR' => new Fund_Parameter(
+        'Risk Measures (Fund Standard Deviation 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.fund_standard_deviation.10YR' => new Fund_Parameter(
+        'Risk Measures (Fund Standard Deviation 10YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+
+      'risk_measures.index_standard_deviation.1YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.index_standard_deviation.3YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.index_standard_deviation.5YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.index_standard_deviation.7YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.index_standard_deviation.10YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 10YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+
+      'risk_measures.tracking_error.1YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.tracking_error.3YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.tracking_error.5YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.tracking_error.7YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.tracking_error.10YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 10YR)',
+        'numeric',
         'any',
         0.5
       ),
@@ -357,15 +673,332 @@ class Fund_Parameters_Collection {
         2
       ),
 
-      'performance.calendar_year' => new Fund_Parameter(
-        'Calendar year returns',
-        'array',
+
+      'performance.calendar_year.2009.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2009)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2010.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2010)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2011.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2011)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2012.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2012)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2013.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2013)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2014.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2014)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2015.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2015)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2016.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2016)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2017.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2017)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2018.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2018)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2019.value' => new Fund_Parameter(
+        'Calendar year returns (Fund 2019)',
+        'numeric',
         'any'
       ),
 
-      'risk_measures' => new Fund_Parameter(
-        'Risk Measures',
-        'object',
+      'performance.calendar_year.2009.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2009)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2010.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2010)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2011.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2011)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2012.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2012)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2013.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2013)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2014.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2014)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2015.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2015)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2016.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2016)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2017.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2017)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2018.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2018)',
+        'numeric',
+        'any'
+      ),
+      'performance.calendar_year.2019.benchmark_value' => new Fund_Parameter(
+        'Calendar year returns (Benchmark 2019)',
+        'numeric',
+        'any'
+      ),
+
+      'risk_measures.alpha.1YR' => new Fund_Parameter(
+        'Risk Measures (Alpha 1YR)',
+        'numeric',
+        'any',
+        1
+      ),
+      'risk_measures.alpha.3YR' => new Fund_Parameter(
+        'Risk Measures (Alpha 3YR)',
+        'numeric',
+        'any',
+        1
+      ),
+      'risk_measures.alpha.5YR' => new Fund_Parameter(
+        'Risk Measures (Alpha 5YR)',
+        'numeric',
+        'any',
+        1
+      ),
+      'risk_measures.alpha.7YR' => new Fund_Parameter(
+        'Risk Measures (Alpha 7YR)',
+        'numeric',
+        'any',
+        1
+      ),
+      'risk_measures.alpha.10YR' => new Fund_Parameter(
+        'Risk Measures (Alpha 10YR)',
+        'numeric',
+        'any',
+        1
+      ),
+
+      'risk_measures.beta.1YR' => new Fund_Parameter(
+        'Risk Measures (Beta 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.beta.3YR' => new Fund_Parameter(
+        'Risk Measures (Beta 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.beta.5YR' => new Fund_Parameter(
+        'Risk Measures (Beta 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.beta.7YR' => new Fund_Parameter(
+        'Risk Measures (Beta 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.beta.10YR' => new Fund_Parameter(
+        'Risk Measures (Beta 10YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+
+      'risk_measures.r-squared.1YR' => new Fund_Parameter(
+        'Risk Measures (R-Squared 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.r-squared.3YR' => new Fund_Parameter(
+        'Risk Measures (R-Squared 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.r-squared.5YR' => new Fund_Parameter(
+        'Risk Measures (R-Squared 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.r-squared.7YR' => new Fund_Parameter(
+        'Risk Measures (R-Squared 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.r-squared.10YR' => new Fund_Parameter(
+        'Risk Measures (R-Squared 10YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+
+      'risk_measures.sharpe_ratio.1YR' => new Fund_Parameter(
+        'Risk Measures (Sharpe Ratio 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.sharpe_ratio.3YR' => new Fund_Parameter(
+        'Risk Measures (Sharpe Ratio 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.sharpe_ratio.5YR' => new Fund_Parameter(
+        'Risk Measures (Sharpe Ratio 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.sharpe_ratio.7YR' => new Fund_Parameter(
+        'Risk Measures (Sharpe Ratio 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.sharpe_ratio.10YR' => new Fund_Parameter(
+        'Risk Measures (Sharpe Ratio 10YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+
+      'risk_measures.fund_standard_deviation.1YR' => new Fund_Parameter(
+        'Risk Measures (Fund Standard Deviation 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.fund_standard_deviation.3YR' => new Fund_Parameter(
+        'Risk Measures (Fund Standard Deviation 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.fund_standard_deviation.5YR' => new Fund_Parameter(
+        'Risk Measures (Fund Standard Deviation 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.fund_standard_deviation.7YR' => new Fund_Parameter(
+        'Risk Measures (Fund Standard Deviation 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.fund_standard_deviation.10YR' => new Fund_Parameter(
+        'Risk Measures (Fund Standard Deviation 10YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+
+      'risk_measures.index_standard_deviation.1YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.index_standard_deviation.3YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.index_standard_deviation.5YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.index_standard_deviation.7YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.index_standard_deviation.10YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 10YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+
+      'risk_measures.tracking_error.1YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 1YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.tracking_error.3YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 3YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.tracking_error.5YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 5YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.tracking_error.7YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 7YR)',
+        'numeric',
+        'any',
+        0.5
+      ),
+      'risk_measures.tracking_error.10YR' => new Fund_Parameter(
+        'Risk Measures (Index Standard Deviation 10YR)',
+        'numeric',
         'any',
         0.5
       ),

@@ -156,7 +156,7 @@ class Settings_Page {
 
   public function render_screenshots_recipients_emails_field() {
     $value = esc_html(DB_Options::get('screenshots_recipients_emails'));
-    printf('<textarea name="mst_4f_as_options[screenshots_recipients_emails]" style="width: 400px">%s</textarea>', $value);
+    printf('<textarea name="mst_4f_as_options[screenshots_recipients_emails]" style="width: 400px; height: 150px;">%s</textarea>', $value);
   }
 
   public function render_pages_to_screenshot_field() {
@@ -179,7 +179,7 @@ class Settings_Page {
 
   public function render_data_changing_recipients_emails_field() {
     $value = esc_html(DB_Options::get('data_changing_recipients_emails'));
-    printf('<textarea name="mst_4f_as_options[data_changing_recipients_emails]" style="width: 400px">%s</textarea>', $value);
+    printf('<textarea name="mst_4f_as_options[data_changing_recipients_emails]" style="width: 400px; height: 150px;">%s</textarea>', $value);
   }
 
   public function render_pages_to_data_changing_watch_field() {
